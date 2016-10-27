@@ -29,6 +29,16 @@ prompt_feature <- function(str) {
     }
     return (input)
 }
+prompt_num <- function(str) {
+    input <- readline(str)
+    if(input=="") {
+        return (-1)
+    }
+    if(!is.integer(input)) {
+        prompt_num(str)
+    }
+    return (input)
+}
 
 # Dataset structure
 cat("*** Dataset structure \n")
@@ -79,35 +89,43 @@ if(is.element(feature_name, names(wbcd_norm))) {
 }
 
 # No need to randomize
-cat("*** Shuffling rows")
-wbcd_rand <- wbcd_norm[sample(nrow(wbcd_norm)),]
+cat("\n *** Shuffling rows")
+wbcd_rand <- wbcd_norm[sample(1:nrow(wbcd_norm)), ]
 pause()
 
 # Split dataframe for training(20%) and model testing(20%)
 cat("*** Split dataset for training and model testing")
-train_rows <- round(nrow(wbcd_rand) * 80 / 100)
-message("*** Train rows: ", train_rows)
-wbcd_train <- wbcd_rand[1:train_rows, ]
-message("*** Test rows: ", (nrow(wbcd_rand)-train_rows))
-wbcd_test <- wbcd_rand[(train_rows+1):(nrow(wbcd_rand)), ]
+n_rows <- prompt_num("*** Select number of testing rows or [ENTER] for default (20%): ")
+if(n_rows == -1) {
+    n_train_rows <- round(nrow(wbcd_rand) * 80 / 100)
+} else {
+    n_train_rows <- nrow(wbcd_rand)-n_rows
+}
+message("*** Train rows: ", n_train_rows)
+wbcd_train <- wbcd_rand[1:n_train_rows, ]
+message("*** Test rows: ", (nrow(wbcd_rand)-n_train_rows))
+wbcd_test <- wbcd_rand[(n_train_rows+1):(nrow(wbcd_rand)), ]
 pause()
 
 # Extracting diagnosis factor for perfomance comparison
-cat("\n*** Extracting diagnosis factor for perfomance comparison \n")
-wbcd_train_labels <- wbcd[1:train_rows, 1]
-wbcd_test_labels <- wbcd[(train_rows+1):(nrow(wbcd_norm)), 1]
+cat("*** Extracting diagnosis factor for perfomance comparison \n")
+wbcd_train_labels <- wbcd[1:n_train_rows, 1]
+wbcd_test_labels <- wbcd[(n_train_rows+1):(nrow(wbcd_rand)), 1]
 pause()
 
-# Find an odd K value
+# Find an optimus K value
 get_k_val <- function() {
-    k_val <- round(sqrt(train_rows))
+    k_val <- round(sqrt(n_train_rows))
     k_val <- ifelse((k_val%%2)!=0, k_val, k_val+1)
     return (k_val)
 }
 
-cat("\n*** Performing knn classification with k=%d", get_k_val())
-cat("\n")
-wbcd_pred <- knn(train=wbcd_train, test=wbcd_test, cl=wbcd_train_labels, k=get_k_val())
+k_val <- prompt_num("*** Select value for K or [ENTER] for default: ")
+if(k_val == -1) {
+    k_val <- get_k_val()
+}
+message("*** Performing knn classification with k=", k_val)
+wbcd_pred <- knn(train=wbcd_train, test=wbcd_test, cl=wbcd_train_labels, k=k_val)
 
 # Results
 CrossTable(x=wbcd_test_labels, y=wbcd_pred, prop.chisq=FALSE)
