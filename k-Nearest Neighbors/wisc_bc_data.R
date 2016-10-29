@@ -11,8 +11,20 @@ setwd("C:/Users/drexa/git/R/Machine Learning")
 wbcd <- read.csv("datasets/wisc_bc_data.csv", stringsAsFactors = FALSE)
 cat("*** Wisconsin General Hospital breast cancer dataset imported \n")
 
+pause_enable <<- "y"
 pause <- function() {
-    invisible(readline(prompt="Press [enter] to continue \n"))
+    if(pause_enable=="y") {
+        invisible(
+            (prompt="Press [enter] to continue \n"))  
+    }
+}
+prompt_ys <- function(str) {
+    input <- readline(str)
+    input <- ifelse(grepl("y|n", input), as.character(input), -1)
+    if(!is.character(input)) {
+        prompt_norm(str)
+    }
+    return (as.character(input))
 }
 prompt_norm <- function(str) {
     input <- readline(str)
@@ -20,24 +32,30 @@ prompt_norm <- function(str) {
     if(!is.character(input)) {
         prompt_norm(str)
     }
-    return (input)
+    return (as.character(input))
 }
 prompt_feature <- function(str) {
     input <- readline(str)
     if(!is.element(input, names(wbcd_norm))) {
         return (-1)
     }
-    return (input)
+    return (as.character(input))
 }
 prompt_num <- function(str) {
     input <- readline(str)
     if(input=="") {
         return (-1)
     }
-    if(!is.integer(input)) {
+    input <- ifelse(grepl("\\d", input), as.integer(input), -1)
+    if(input < 1) {
         prompt_num(str)
     }
-    return (input)
+    return (as.integer(input))
+}
+
+confirm <- prompt_ys("*** Enable pause (y/n): ")
+if(confirm == "n") {
+    pause_enable <<- "n"
 }
 
 # Dataset structure
@@ -88,16 +106,17 @@ if(is.element(feature_name, names(wbcd_norm))) {
     print(summary(wbcd_norm[ , feature_name])) 
 }
 
-# No need to randomize
-cat("\n *** Shuffling rows")
-wbcd_rand <- wbcd_norm[sample(1:nrow(wbcd_norm)), ]
-pause()
+# cat("\n *** Shuffling rows")
+# wbcd_rand <- wbcd_norm[sample(1:nrow(wbcd_norm)), ]
+# No randomizing
+cat("*** No randomizing")
+wbcd_rand <- wbcd_norm
 
 # Split dataframe for training(20%) and model testing(20%)
-cat("*** Split dataset for training and model testing")
+cat("\n *** Split dataset for training and model testing")
 n_rows <- prompt_num("*** Select number of testing rows or [ENTER] for default (20%): ")
 if(n_rows == -1) {
-    n_train_rows <- round(nrow(wbcd_rand) * 80 / 100)
+    n_train_rows <- round(nrow(wbcd_rand)*80/100)
 } else {
     n_train_rows <- nrow(wbcd_rand)-n_rows
 }
