@@ -20,21 +20,11 @@ prompt_ys <- function(str) {
 }
 prompt_feature <- function(str) {
     input <- readline(str)
-    if(!is.element(input, names(wbcd_norm))) {
-        return (-1)
+    input <- ifelse(grepl("mean|se|worst", input), as.character(input), -1)
+    if(!is.character(input)) {
+        prompt_feature(str)
     }
     return (as.character(input))
-}
-prompt_num <- function(str) {
-    input <- readline(str)
-    if(input=="") {
-        return (-1)
-    }
-    input <- ifelse(grepl("\\d", input), as.integer(input), -1)
-    if(input < 1) {
-        prompt_num(str)
-    }
-    return (as.integer(input))
 }
 
 pause_enable <- prompt_ys("*** Enable pause (y/n): ")
@@ -43,23 +33,28 @@ pause_enable <- prompt_ys("*** Enable pause (y/n): ")
 wbcd$id <- seq(1, nrow(wbcd), by=1)
 
 # Diagnosis by mean/se/worst values
-
-png("diagnosis_by_area_mean.png", width = 1000, height = 1000, res = 72)
-wbcd$color <- ""
-wbcd$color[wbcd$diagnosis=="M"] <- "red"
-wbcd$color[wbcd$diagnosis=="B"] <- "green"
-plot(wbcd$id, wbcd$area_mean,                              
-     col = wbcd$color,  
-     pch = 15,
-     cex = .5,                                                
-     xlab = "Patients",                                              
-     ylab = "Area mean",                                   
-     main = "Masses: area mean")
-legend (x = 0, y = 2600, 
-        legend = c("Benign", "Malignant"), 
-        col = c("green", "red"), 
-        pch = 15)
-dev.off()
-pause()
-
+plots <- list()
+feature_type <- prompt_feature("*** Select feature to plot [mean|se|worst]: ")
+selected_features <- names(wbcd)[grep(paste("_",feature_type,sep=""), names(wbcd))]
+for(feature_name in selected_features) {
+    cat(paste("*** Generating plot for ",feature_name," \n",sep=""))
+    plot_name <- paste("diagnosis_by_",feature_name,sep="")
+    png(paste(plot_name,".png",sep=""), width = 1000, height = 1000, res = 72)
+    wbcd$color <- ""
+    wbcd$color[wbcd$diagnosis=="M"] <- "red"
+    wbcd$color[wbcd$diagnosis=="B"] <- "green"
+    plots[[length(plots)+1]] <- plot(wbcd$id, wbcd_norm[ , feature_name],                              
+         col = wbcd$color,  
+         pch = 15,
+         cex = .5,                                                
+         xlab = "Patients",                                              
+         ylab = feature_name,                                   
+         main = paste("Masses: ",feature_name,sep=""))
+    legend (x = 0, y = max(wbcd_norm[ , feature_name]), 
+            legend = c("Benign", "Malignant"), 
+            col = c("green", "red"), 
+            pch = 15)
+    dev.off()
+    pause()
+}
 
