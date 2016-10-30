@@ -1,14 +1,13 @@
 
 # Import data
-setwd("C:/Users/drexa/git/R/Machine Learning")
-wbcd <- read.csv("datasets/wisc_bc_data.csv", stringsAsFactors = TRUE)
+setwd("C:/Users/drexa/git/R/Machine Learning/k-Nearest Neighbors")
+wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = TRUE)
 cat("*** Wisconsin General Hospital breast cancer dataset imported \n")
 
 pause_enable <<- "y"
 pause <- function() {
     if(pause_enable=="y") {
-        invisible(
-            (prompt="Press [enter] to continue \n"))  
+        invisible((prompt="Press [enter] to continue \n"))  
     }
 }
 prompt_ys <- function(str) {
@@ -38,18 +37,29 @@ prompt_num <- function(str) {
     return (as.integer(input))
 }
 
-confirm <- prompt_ys("*** Enable pause (y/n): ")
-if(confirm == "n") {
-    pause_enable <<- "n"
-}
+pause_enable <- prompt_ys("*** Enable pause (y/n): ")
 
 # Replace patient id with serial integers
 wbcd$id <- seq(1, nrow(wbcd), by=1)
 
+# Diagnosis by mean/se/worst values
+
+png("diagnosis_by_area_mean.png", width = 1000, height = 1000, res = 72)
+wbcd$color <- ""
+wbcd$color[wbcd$diagnosis=="M"] <- "red"
+wbcd$color[wbcd$diagnosis=="B"] <- "green"
 plot(wbcd$id, wbcd$area_mean,                              
-     col = wbcd$diagnosis,    
+     col = wbcd$color,  
      pch = 15,
      cex = .5,                                                
      xlab = "Patients",                                              
-     ylab = "Area_mean",                                   
-     main = "Masses area: mean")
+     ylab = "Area mean",                                   
+     main = "Masses: area mean")
+legend (x = 0, y = 2600, 
+        legend = c("Benign", "Malignant"), 
+        col = c("green", "red"), 
+        pch = 15)
+dev.off()
+pause()
+
+

@@ -7,15 +7,14 @@ cat(" k-Nearest Neighbors lazy classification \n")
 cat("---------------------------------------------------------- \n\n")
 
 # Import data
-setwd("C:/Users/drexa/git/R/Machine Learning")
-wbcd <- read.csv("datasets/wisc_bc_data.csv", stringsAsFactors = FALSE)
+setwd("C:/Users/drexa/git/R/Machine Learning/k-Nearest Neighbors")
+wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = FALSE)
 cat("*** Wisconsin General Hospital breast cancer dataset imported \n")
 
 pause_enable <<- "y"
 pause <- function() {
     if(pause_enable=="y") {
-        invisible(
-            (prompt="Press [enter] to continue \n"))  
+        invisible((prompt="Press [enter] to continue \n"))  
     }
 }
 prompt_ys <- function(str) {
