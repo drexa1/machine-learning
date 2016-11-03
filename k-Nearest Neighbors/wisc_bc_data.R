@@ -7,7 +7,7 @@ cat(" k-Nearest Neighbors lazy classification \n")
 cat("---------------------------------------------------------- \n\n")
 
 # Import data
-setwd("C:/Users/drexa/git/R/Machine Learning/k-Nearest Neighbors")
+setwd("C:/Users/drexa/git/R/MachineLearning/k-Nearest Neighbors")
 wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = FALSE)
 cat("*** Wisconsin General Hospital breast cancer dataset imported \n")
 

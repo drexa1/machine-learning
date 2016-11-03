@@ -1,6 +1,6 @@
 
 # Import data
-setwd("C:/Users/DR186049/git/MachineLearning/k-Nearest Neighbors")
+setwd("C:/Users/drexa/git/R/MachineLearning/k-Nearest Neighbors")
 wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = TRUE)
 cat("\n *** Wisconsin General Hospital breast cancer dataset imported \n")
 
@@ -22,7 +22,7 @@ selected_features <- names(wbcd)[grep(paste("_",feature_type,sep=""), names(wbcd
 
 # Layout
 color <- ""
-# par(mar=rep(1,4))
+par(mar=rep(2,4))
 par(mfrow=c(3,4))
 
 features <- list()
