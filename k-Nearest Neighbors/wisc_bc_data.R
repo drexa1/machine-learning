@@ -88,7 +88,6 @@ pause()
 normalize <- function(x) {
     return ((x-min(x)) / (max(x)-min(x)))
 }
-
 # Normalize numeric features
 confirm <- prompt_norm("*** Select 0-1 standard normalization or z-scale standardization (n/z): ")
 if(confirm == "n") {
