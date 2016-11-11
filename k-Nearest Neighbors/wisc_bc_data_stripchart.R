@@ -1,4 +1,3 @@
-library("ggplot2")
 
 # Import data
 setwd("C:/Users/drexa/git/R/MachineLearning/k-Nearest Neighbors")
@@ -47,9 +46,14 @@ if(confirm == "n") {
 # Reattach dianosis factor
 # wbcd_norm$diagnosis <- wbcd$diagnosis
 
-# wbcd_trans <- data.frame(t(wbcd_norm))
-plot <- ggplot(wbcd_norm) + coord_flip()
-print(plot)
+color <- ifelse(wbcd$diagnosis=="M", "red", "black")
+stripchart(wbcd_norm,
+           main=paste("Masses measures: ",feature_type," \n",sep=""),
+           vertical=TRUE,
+           col=color,
+           #method="jitter",
+           pch=20
+)
 
 
 
