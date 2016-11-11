@@ -44,18 +44,16 @@ if(confirm == "n") {
 }
 
 # Reattach dianosis factor
-# wbcd_norm$diagnosis <- wbcd$diagnosis
+wbcd_norm$diagnosis <- wbcd$diagnosis
 
-color <- ifelse(wbcd$diagnosis=="M", "red", "black")
-stripchart(wbcd_norm,
+diagnosis_color <- factor(wbcd_norm$diagnosis, c("B", "M"), c("green", "red"))
+stripchart(wbcd_norm[ ,selected_features],
            main=paste("Masses measures: ",feature_type," \n",sep=""),
            vertical=TRUE,
-           col=color,
-           #method="jitter",
-           pch=20
-)
-
-
-
+           col = "transparent",
+           bg = diagnosis_color,
+           method="jitter",
+           cex.axis = 0.7,
+           pch=21)
 
 
