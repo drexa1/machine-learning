@@ -3,7 +3,7 @@ library("gmodels")
 
 cat("\n")
 cat("---------------------------------------------------------- \n")
-cat(" k-Nearest Neighbors lazy classification \n")
+cat(" Classification using k-Nearest Neighbors \n")
 cat("---------------------------------------------------------- \n\n")
 
 # Import data
@@ -110,8 +110,8 @@ if(is.element(feature_name, names(wbcd_norm))) {
 cat("*** No randomizing")
 wbcd_rand <- wbcd_norm
 
-# Split dataframe for training(20%) and model testing(20%)
-cat("\n *** Split dataset for training and model testing")
+# Split dataframe for training(80%) and model testing(20%)
+cat("\n *** Splitting dataset for training and model testing")
 n_rows <- prompt_num("*** Select number of testing rows or [ENTER] for default (20%): ")
 if(n_rows == -1) {
     n_train_rows <- round(nrow(wbcd_rand)*80/100)
@@ -125,7 +125,7 @@ wbcd_test <- wbcd_rand[(n_train_rows+1):(nrow(wbcd_rand)), ]
 pause()
 
 # Extracting diagnosis factor for perfomance comparison
-cat("*** Extracting diagnosis factor for perfomance comparison \n")
+cat("*** Extracting $diagnosis factor for perfomance comparison \n")
 wbcd_train_labels <- wbcd[1:n_train_rows, 1]
 wbcd_test_labels <- wbcd[(n_train_rows+1):(nrow(wbcd_rand)), 1]
 pause()
