@@ -46,14 +46,22 @@ if(confirm == "n") {
 # Reattach dianosis factor
 wbcd_norm$diagnosis <- wbcd$diagnosis
 
-diagnosis_color <- factor(wbcd_norm$diagnosis, c("B", "M"), c("green", "red"))
+# This needs to be a vector type object
+colorize_diagnosis <- function(diagnosis_colors) {
+    for(i in 1:length(wbcd_norm$diagnosis)) {
+        diagnosis_colors[i] <- ifelse(wbcd_norm$diagnosis[i]=="M", "red", "seagreen3")
+    }
+    return (diagnosis_colors)
+}
+diagnosis_colors <- vector(mode="character", length=nrow(wbcd_norm))
+diagnosis_colors <- colorize_diagnosis(diagnosis_colors)
 stripchart(wbcd_norm[ ,selected_features],
            main=paste("Masses measures: ",feature_type," \n",sep=""),
            vertical=TRUE,
            col = "transparent",
-           bg = diagnosis_color,
-           method="jitter",
+           bg = diagnosis_colors,
+           #method="jitter",
            cex.axis = 0.7,
-           pch=21)
+           pch=22)
 
 
