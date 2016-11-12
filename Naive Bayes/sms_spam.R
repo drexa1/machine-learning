@@ -123,8 +123,8 @@ cat("*** Classifier build, predicting... \n")
 sms_test_pred <- predict(sms_classifier, sms_test)
 
 # Results
-print(CrossTable(sms_test_pred, sms_test_labels, 
+CrossTable(sms_test_pred, sms_test_labels, 
            prop.chisq=FALSE, 
            prop.t=FALSE, 
-           dnn = c('Predicted', 'Actual')))
+           dnn = c('Predicted', 'Actual'))
 
