@@ -40,3 +40,28 @@ Weaknesses
 
 Bayesian classifiers are best applied to problems in which the information from numerous attributes should be considered simultaneously in order to estimate the overall probability of an outcome. While many machine learning algorithms ignore features that have weak effects, Bayesian methods utilize all the available evidence to subtly change the predictions. If large number of features have relatively minor effects, taken together, their combined impact could be quite large.
 
+Divide and Conquer – Classification Using Decision Trees
+---------------------------------------------------------
+
+- Credit scoring models in which the criteria that causes an applicant to be rejected need to be clearly documented and free from bias 
+- Marketing studies of customer behavior such as satisfaction or churn, which will be shared with management or advertising agencies 
+- Diagnosis of medical conditions based on laboratory measurements, symptoms, or the rate of disease progression
+
+Strengths
+- An all-purpose classifier that does well on most problems 
+- Highly automatic learning process, which can handle numeric or nominal features, as well as missing data 
+- Excludes unimportant features 
+- Can be used on both small and large datasets 
+- Results in a model that can be interpreted without a mathematical background (for relatively small trees) 
+- More efficient than other complex models
+
+Weaknesses
+- Decision tree models are often biased toward splits on features having a large number of levels - It is easy to overfit or underfit the model 
+- Can have trouble modeling some relationships due to reliance on axis-parallel splits 
+- Small changes in the training data can result in large changes to decision logic 
+- Large trees can be difficult to interpret and the decisions they make may seem counterintuitive
+
+Decision trees are perhaps the single most widely used machine learning technique, and can be applied to model almost any type of data— often with excellent out-of-the-box applications. 
+This said, in spite of their wide applicability, it is worth noting some scenarios where trees may not be an ideal fit. One such case might be a task where the data has a large number of nominal features with many levels or it has a large number of numeric features. These cases may result in a very large number of decisions and an overly complex tree. They may also contribute to the tendency of decision trees to overfit data. Even this weakness can be overcome by adjusting some simple parameters.
+
+
