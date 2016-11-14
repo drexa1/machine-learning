@@ -4,18 +4,16 @@ library("gmodels")
 cat("\n")
 cat("---------------------------------------------------------- \n")
 cat(" Classification using k-Nearest Neighbors \n")
-cat("---------------------------------------------------------- \n\n")
+cat("---------------------------------------------------------- \n")
 
 # Import data
 setwd("C:/Users/drexa/git/R/MachineLearning/k-Nearest Neighbors")
+# setwd("C:/Users/dr186049/git/MachineLearning/k-Nearest Neighbors")
 wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = FALSE)
-cat("*** Wisconsin General Hospital breast cancer dataset imported \n")
+cat("*** Wisconsin General Hospital breast cancer dataset imported \n\n")
 
-pause_enable <<- "y"
 pause <- function() {
-    if(pause_enable=="y") {
-        invisible((prompt="Press [enter] to continue \n"))  
-    }
+    (prompt="Press [enter] to continue \n")
 }
 prompt_ys <- function(str) {
     input <- readline(str)
@@ -52,16 +50,6 @@ prompt_num <- function(str) {
     return (as.integer(input))
 }
 
-confirm <- prompt_ys("*** Enable pause (y/n): ")
-if(confirm == "n") {
-    pause_enable <<- "n"
-}
-
-# Dataset structure
-cat("*** Dataset structure \n")
-str(wbcd)
-pause()
-
 # Exclude ID to avoid spurius predictions
 id_idx <- match("id", names(wbcd))
 wbcd <- wbcd[-id_idx]
@@ -80,7 +68,7 @@ print(round(prop.table(table(wbcd$diagnosis))*100, digits=2))
 pause()
 
 # Some numeric features hold way larger measures than others
-cat("*** Normalization is required \n")
+cat("\n*** Normalization is required \n")
 print(summary(wbcd[c("radius_mean", "area_mean", "smoothness_mean")]))
 pause()
 

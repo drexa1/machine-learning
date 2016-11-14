@@ -6,12 +6,13 @@ library("gmodels")
 cat("\n")
 cat("---------------------------------------------------------- \n")
 cat(" Classification using Naive Bayes \n")
-cat("---------------------------------------------------------- \n\n")
+cat("---------------------------------------------------------- \n")
 
 # Import data
 setwd("C:/Users/drexa/git/R/MachineLearning/Naive Bayes")
+# setwd("C:/Users/dr186049/git/MachineLearning/Naive Bayes")
 sms_raw <- read.csv("../datasets/sms_spam.csv", stringsAsFactors = FALSE)
-cat("*** SMS Spam Collection dataset imported \n")
+cat("*** SMS Spam Collection dataset imported \n\n")
 
 prompt_num <- function(str) {
     input <- readline(str)
@@ -52,22 +53,23 @@ cat("*** Generated volatile corpus \n")
 # sms_corpus_clean <- tm_map(sms_corpus_clean, stemDocument)
 # cat("*** Corpus cleaned \n")
 
-example <- sample(1:length(sms_corpus), 1)
-cat(as.character(sms_corpus[[example]]))
-cat("\n")
-cat(as.character(sms_corpus_clean[[example]]))
-
 # Tokenize into term matrix
 # sms_dtm <- DocumentTermMatrix(sms_corpus_clean)
+
 # Alternative order of transformations
-if(FALSE)
+cat("\n *** Generating Term matrix from document... \n")
 sms_dtm <- DocumentTermMatrix(sms_corpus, 
                 control = list(tolower = TRUE, 
                                removeNumbers = TRUE, 
                                stopwords = TRUE, 
                                removePunctuation = TRUE, 
                                stemming = TRUE))
-cat("\n\n *** Term matrix created \n")
+
+# In DocumentTermMatrix text rows can't be retrieved
+# example <- sample(1:length(sms_corpus), 1)
+# cat(as.character(sms_corpus[[example]]))
+# cat("\n")
+# cat(as.character(sms_dtm[[example]]))
 
 # Split dataframe for training(75%) and model testing(25%)
 cat("*** Splitting dataset for training and model testing")
@@ -83,29 +85,33 @@ message("*** Test rows: ", (nrow(sms_dtm)-n_train_rows))
 sms_dtm_test <- sms_dtm[(n_train_rows+1):(nrow(sms_dtm)), ]
 
 # Extracting type factor for perfomance comparison
-cat("*** Extracting $type factor for perfomance comparison \n")
+cat("*** Extracting $type factor for perfomance comparison \n\n")
 sms_train_labels <- sms_raw[1:n_train_rows, ]$type 
 sms_test_labels <- sms_raw[(n_train_rows+1):(nrow(sms_dtm)), ]$type
 
 # Confirm representativity of the testing subset
 print(prop.table(table(sms_train_labels)))
+cat("\n")
 print(prop.table(table(sms_test_labels)))
 
 # Subset for wordclouds
-spam <- subset(sms_raw, type=="spam")
-ham <- subset(sms_raw, type=="ham")
-cat("\n*** Subset ham/spam for wordclouds \n")
-
-# 50 represents 1% of the whole dataset
-par(mfrow=c(1,2)) 
-wordcloud(spam$text, max.words=50, random.order=FALSE, scale=c(2,0.3))
-wordcloud(ham$text, max.words=50, random.order=FALSE, scale=c(2,0.3))
+draw_wc <- prompt_ys("\n*** Draw wordclouds? (y/n): ")
+if(draw_wc=="y") {
+  spam <- subset(sms_raw, type=="spam")
+  ham <- subset(sms_raw, type=="ham")
+  
+  # 50 represents 1% of the whole dataset
+  cat("\n*** Subset ham/spamn for wordclouds. Plotting... \n")
+  par(mfrow=c(1,2)) 
+  wordcloud(spam$text, max.words=50, random.order=FALSE, scale=c(2,0.3))
+  wordcloud(ham$text, max.words=50, random.order=FALSE, scale=c(2,0.3))
+}
 
 # Reduce the sparse matrix
 sms_freq_words <- findFreqTerms(sms_dtm_train, 5)
 sms_dtm_freq_train <- sms_dtm_train[ , sms_freq_words]
 sms_dtm_freq_test <- sms_dtm_test[ , sms_freq_words]
-cat("*** Training and test sparse dtms reduced \n")
+cat("\n*** Training and test sparse dtms reduced \n")
 
 # Turn columns into categorical
 convert_counts <- function(x) { 
