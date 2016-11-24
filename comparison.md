@@ -72,8 +72,14 @@ Divide and Conquer – Classification Using Decision Rules
 - Finding conditions that precede large drops or increases in the prices of shares on the stock market
 
 Strengths
+- Generates easy-to-understand, human-readable rules
+- Efficient on large and noisy datasets
+- Generally produces a simpler model than a comparable decision tree
 
 Weaknesses
+- May result in rules that seem to defy common sense or expert knowledge
+- Not ideal for working with numeric data
+- Might not perform as well as more complex models
 
 Rules can be generated using decision trees. Decision trees bring a particular set of biases to the task that a rule learner avoids by identifying the rules directly. 
 Rule learners are generally applied to problems where the features are primarily or entirely nominal.
