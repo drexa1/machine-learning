@@ -64,4 +64,20 @@ Weaknesses
 Decision trees are perhaps the single most widely used machine learning technique, and can be applied to model almost any type of data— often with excellent out-of-the-box applications. 
 This said, in spite of their wide applicability, it is worth noting some scenarios where trees may not be an ideal fit. One such case might be a task where the data has a large number of nominal features with many levels or it has a large number of numeric features. These cases may result in a very large number of decisions and an overly complex tree. They may also contribute to the tendency of decision trees to overfit data. Even this weakness can be overcome by adjusting some simple parameters.
 
+Divide and Conquer – Classification Using Decision Rules
+---------------------------------------------------------
+
+- Identifying conditions that lead to a hardware failure in mechanical devices
+- Describing the key characteristics of groups of people for customer segmentation
+- Finding conditions that precede large drops or increases in the prices of shares on the stock market
+
+Strengths
+
+Weaknesses
+
+Rules can be generated using decision trees. Decision trees bring a particular set of biases to the task that a rule learner avoids by identifying the rules directly. 
+Rule learners are generally applied to problems where the features are primarily or entirely nominal.
+They do well at identifying rare events, even if the rare event occurs only for a very specific interaction among feature values.
+
+
 
