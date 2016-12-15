@@ -20,11 +20,13 @@ mushrooms$veil_type <- NULL
 # but classifying the whole exisiting set
 
 # 1 Rule classifier
+cat("*** 1 Rule classifier \n\n")
 mushroom_1R <- OneR(type~., data=mushrooms)
 print(mushroom_1R)
-summary(mushroom_1R)
+print(summary(mushroom_1R))
 
 # RIPPER classifier
+cat("\n*** RIPPER classifier \n\n")
 mushroom_JRip <- JRip(type~., data=mushrooms)
 print(mushroom_JRip)
-summary(mushroom_JRip)
+print(summary(mushroom_JRip))

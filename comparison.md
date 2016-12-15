@@ -1,4 +1,4 @@
-﻿
+
 Lazy Learning – Classification Using Nearest Neighbors
 -------------------------------------------------------
 
@@ -85,7 +85,28 @@ Rules can be generated using decision trees. Decision trees bring a particular s
 Rule learners are generally applied to problems where the features are primarily or entirely nominal.
 They do well at identifying rare events, even if the rare event occurs only for a very specific interaction among feature values.
 
+Forecasting Numeric Data – Regression Methods
+----------------------------------------------
 
+- Examining how populations and individuals vary by their measured characteristics, for use in scientific research across fields as diverse as economics, sociology, psychology, physics, and ecology 
+- Quantifying the causal relationship between an event and the response, such as those in clinical drug trials, engineering safety tests, or marketing research 
+- Identifying patterns that can be used to forecast future behavior given known criteria, such as predicting insurance claims, natural disaster damage, election results, and crime rates
 
+Strengths
+- By far the most common approach for modeling numeric data 
+- Can be adapted to model almost any modeling task 
+- Provides estimates of both the strength and size of the relationships among features and the outcome
 
+Weaknesses
+- Makes strong assumptions about the data 
+- The model's form must be specified by the user in advance 
+- Does not handle missing data 
+- Only works with numeric features, so categorical data requires extra processing 
+- Requires some knowledge of statistics to understand the model
+
+Regression is concerned with specifying the relationship between a single numeric dependent variable (the value to be predicted) and one or more numeric independent variables (the predictors). 
+Regression analysis is commonly used for modeling complex relationships among data elements, estimating the impact of a treatment on an outcome, and extrapolating into the future.
+
+Forecasting Numeric Data – Regression Trees and Model Trees
+------------------------------------------------------------
 

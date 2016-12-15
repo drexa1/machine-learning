@@ -15,11 +15,13 @@ cat("*** Wisconsin General Hospital breast cancer dataset imported \n\n")
 wbcd$diagnosis <- factor(wbcd$diagnosis)
 
 # 1 Rule classifier
+cat("*** 1 Rule classifier \n\n")
 wbcd_1R <- OneR(diagnosis~., data=wbcd)
 print(wbcd_1R)
-summary(wbcd_1R)
+print(summary(wbcd_1R))
 
 # RIPPER classifier
+cat("\n*** RIPPER classifier \n\n")
 wbcd_JRip <- JRip(diagnosis~., data=wbcd)
 print(wbcd_JRip)
-summary(wbcd_JRip)
+print(summary(wbcd_JRip))
