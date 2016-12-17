@@ -15,9 +15,9 @@ setwd("C:/Users/drexa/git/R/MachineLearning/Decision Trees")
 credits <- read.csv("../datasets/credit.csv", stringsAsFactors = TRUE)
 cat("*** Hamburg Credit agency loans dataset imported \n\n")
 
-cat("Checking balances:")
+cat("*** Checking balances: ")
 print(table(credits$checking_balance))
-cat("Savings balances:")
+cat("*** Savings balances: ")
 print(table(credits$savings_balance))
 
 # Recode $default as a factor
@@ -40,7 +40,7 @@ train_sample <- sample(1000, 900)
 credit_train <- credits[train_sample, ]
 credit_test <- credits[-train_sample, ]
 
-cat("\nRepresentativity of the samples:\n")
+cat("\n*** Representativity of the samples:\n")
 print(prop.table(table(credit_train$default)))
 print(prop.table(table(credit_test$default)))
 
@@ -53,7 +53,7 @@ credit_model <- C5.0(credit_train[-resultcol_idx], credit_train$default)
 
 # Results
 credit_pred <- predict(credit_model, credit_test)
-cat("\nTree results:")
+cat("\n*** Tree results:")
 CrossTable(credit_test$default, credit_pred, 
            prop.chisq=FALSE, prop.c=FALSE, prop.r = FALSE, 
            dnn=c('actual default', 'predicted default'))
@@ -65,7 +65,7 @@ credit_boost10 <- C5.0(credit_train[-resultcol_idx], credit_train$default, trial
 # print(summary(credit_boost10))
 
 credit_boost10_pred <- predict(credit_boost10, credit_test)
-cat("\nBoosted tree results:")
+cat("\n*** Boosted tree results:")
 CrossTable(credit_test$default, credit_boost10_pred, 
            prop.chisq=FALSE, prop.c=FALSE, prop.r = FALSE, 
            dnn=c('actual default', 'predicted default'))
@@ -79,7 +79,7 @@ credit_costs <- C5.0(credit_train[-resultcol_idx], credit_train$default, costs=e
 # print(summary(credit_costs))
 
 credit_costs_pred <- predict(credit_costs, credit_test)
-cat("\nTree with costs matrix results:")
+cat("\n*** Tree with costs matrix results:")
 CrossTable(credit_test$default, credit_costs_pred, 
            prop.chisq=FALSE, prop.c=FALSE, prop.r = FALSE, 
            dnn=c('actual default', 'predicted default'))

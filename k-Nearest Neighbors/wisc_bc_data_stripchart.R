@@ -2,7 +2,7 @@
 # Import data
 setwd("C:/Users/drexa/git/R/MachineLearning/k-Nearest Neighbors")
 # setwd("C:/Users/dr186049/git/MachineLearning/k-Nearest Neighbors")
-wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = TRUE)
+wbcd <- read.csv("../datasets/wiscbcdata.csv", stringsAsFactors = TRUE)
 cat("\n *** Wisconsin General Hospital breast cancer dataset imported \n")
 
 prompt_feature <- function(str) {
@@ -56,6 +56,7 @@ colorize_diagnosis <- function(diagnosis_colors) {
 }
 diagnosis_colors <- vector(mode="character", length=nrow(wbcd_norm))
 diagnosis_colors <- colorize_diagnosis(diagnosis_colors)
+# dev.off
 stripchart(wbcd_norm[ ,selected_features],
            main=paste("Masses measures: ",feature_type," \n",sep=""),
            vertical=TRUE,

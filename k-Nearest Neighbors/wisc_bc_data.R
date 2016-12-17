@@ -9,7 +9,7 @@ cat("---------------------------------------------------------- \n")
 # Import data
 setwd("C:/Users/drexa/git/R/MachineLearning/k-Nearest Neighbors")
 # setwd("C:/Users/dr186049/git/MachineLearning/k-Nearest Neighbors")
-wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = FALSE)
+wbcd <- read.csv("../datasets/wiscbcdata.csv", stringsAsFactors = FALSE)
 cat("*** Wisconsin General Hospital breast cancer dataset imported \n\n")
 
 pause <- function() {
