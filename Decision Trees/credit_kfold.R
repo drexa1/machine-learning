@@ -33,7 +33,7 @@ results <- lapply(folds, function(x) {
     kappa <- kappa2(data.frame(credit_actual, credit_pred))
     return(kappa$value)
 })
-cat("*** Kappa statistic mean for 10 folds: ")
+cat("*** C5.0 - Kappa statistic mean for 10 folds: ")
 print(mean(unlist(results)))
 
 results <- lapply(folds, function(x) {
@@ -45,7 +45,7 @@ results <- lapply(folds, function(x) {
     kappa <- kappa2(data.frame(credit_actual, credit_pred))
     return(kappa$value)
 })
-cat("*** Kappa statistic mean for 10 folds: ")
+cat("*** C5.0 boosted - Kappa statistic mean for 10 folds: ")
 print(mean(unlist(results)))
 
 
