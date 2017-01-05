@@ -8,19 +8,19 @@ cat("---------------------------------------------------------- \n")
 cat(" Numeric forecasting using Regression Trees \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Regression Trees")
-# setwd("C:/Users/dr186049/git/MachineLearning/Regression Trees")
+# setwd("C:/Users/drexa/git/R/MachineLearning/Regression Trees")
+setwd("C:/Users/dr186049/git/MachineLearning/Regression Trees")
 
 prompt_num <- function(str) {
     input <- readline(str)
-    if(input=="") {
-        return (-1)
+    if (input == "") {
+        return(-1)
     }
     input <- ifelse(grepl("\\d", input), as.integer(input), -1)
-    if(input < 1) {
+    if (input < 1) {
         prompt_num(str)
     }
-    return (as.integer(input))
+    return(as.integer(input))
 }
 
 # Import data
@@ -31,7 +31,7 @@ cat("*** Qualities overview: \n")
 print(summary(wines$quality))
 dev.off
 ggplot(wines, aes(quality)) +
-    geom_histogram(color="black", fill="light blue")
+geom_histogram(color = "black", fill = "light blue")
 
 cat("\n")
 n_rows <- prompt_num("*** Select number of testing rows or [ENTER] for default (20%): ")

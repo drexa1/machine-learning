@@ -8,20 +8,20 @@ cat("---------------------------------------------------------- \n")
 cat(" Classification using Decision Trees \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Decision Trees")
-# setwd("C:/Users/dr186049/git/MachineLearning/Decision Trees")
+# setwd("C:/Users/drexa/git/R/MachineLearning/Decision Trees")
+setwd("C:/Users/dr186049/git/MachineLearning/Decision Trees")
 
 # Import data (majority of nominal features)
 credits <- read.csv("../datasets/credit.csv", stringsAsFactors = TRUE)
 cat("*** Hamburg Credit agency loans dataset imported \n\n")
 
+# Recode $default as a factor
+credits$default <- factor(credits$default, c("1", "2"), c("no", "yes"))
+
 cat("*** Checking balances: ")
 print(table(credits$checking_balance))
 cat("*** Savings balances: ")
 print(table(credits$savings_balance))
-
-# Recode $default as a factor
-credits$default <- factor(credits$default, c("1", "2"), c("no", "yes"))
 
 # ggplot2 does not assume a single vector
 p1 <- ggplot(credits, aes(x=1, y=months_loan_duration)) +

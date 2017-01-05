@@ -1,5 +1,6 @@
 library("tm")
 library("wordcloud")
+library("SnowballC")
 library("e1071")
 library("gmodels")
 
@@ -9,8 +10,8 @@ cat(" Classification using Naive Bayes \n")
 cat("---------------------------------------------------------- \n")
 
 # Import data
-setwd("C:/Users/drexa/git/R/MachineLearning/Naive Bayes")
-# setwd("C:/Users/dr186049/git/MachineLearning/Naive Bayes")
+# setwd("C:/Users/drexa/git/R/MachineLearning/Naive Bayes")
+setwd("C:/Users/dr186049/git/MachineLearning/Naive Bayes")
 sms_raw <- read.csv("../datasets/sms_spam.csv", stringsAsFactors = FALSE)
 cat("*** SMS Spam Collection dataset imported \n\n")
 

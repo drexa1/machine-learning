@@ -7,8 +7,8 @@ cat("---------------------------------------------------------- \n")
 cat(" Numeric forecasting using Linear Regression \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Linear Regression")
-# setwd("C:/Users/dr186049/git/MachineLearning/Linear Regression")
+# setwd("C:/Users/drexa/git/R/MachineLearning/Linear Regression")
+setwd("C:/Users/dr186049/git/MachineLearning/Linear Regression")
 
 # Import data
 insurance <- read.csv("../datasets/insurance.csv", stringsAsFactors = TRUE)
@@ -19,10 +19,9 @@ print(summary(insurance$charges))
 
 # Mean value is substantially greater than the median
 insurance$high_rev <- as.factor(insurance[,7] < mean(insurance$charges))
-dev.off
 ggplot(insurance, aes(charges, fill=high_rev)) +
        geom_histogram(color="black") +
-       xlab("Expenses")
+       xlab("Expenses") +
        ggtitle("Distribution of expenses")
 
 cat("\n*** Correlation among numeric features: \n")

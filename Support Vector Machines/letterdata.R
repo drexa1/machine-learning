@@ -5,8 +5,8 @@ cat("---------------------------------------------------------- \n")
 cat(" Modeling using Support Vector Machines \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Support Vector Machines")
-# setwd("C:/Users/dr186049/git/MachineLearning/Support Vector Machines")
+# setwd("C:/Users/drexa/git/R/MachineLearning/Support Vector Machines")
+setwd("C:/Users/dr186049/git/MachineLearning/Support Vector Machines")
 
 # Import data
 letters <- read.csv("../datasets/letterdata.csv")

@@ -5,8 +5,8 @@ cat("---------------------------------------------------------- \n")
 cat(" Modeling using Neural Networks \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Neural Networks")
-# setwd("C:/Users/dr186049/git/MachineLearning/Neural Networks")
+# setwd("C:/Users/drexa/git/R/MachineLearning/Neural Networks")
+setwd("C:/Users/dr186049/git/MachineLearning/Neural Networks")
 
 # Import data
 concrete <- read.csv("../datasets/concrete.csv")

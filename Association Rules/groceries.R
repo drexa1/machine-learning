@@ -5,8 +5,8 @@ cat("---------------------------------------------------------- \n")
 cat(" Pattern discovery using Association Rules \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Association Rules")
-# setwd("C:/Users/dr186049/git/MachineLearning/Association Rules")
+# setwd("C:/Users/drexa/git/R/MachineLearning/Association Rules")
+setwd("C:/Users/dr186049/git/MachineLearning/Association Rules")
 
 # Import data
 groceries_csv <- read.csv("../datasets/groceries.csv")
@@ -39,7 +39,7 @@ inspect(berryrules)
 
 # saving rules to dataset
 cat("\n*** Saving rules to dataset \n")
-groceries_rules_df <- as(groceryrules, "data.frame")
+groceries_rules_df <- as(groceries_rules, "data.frame")
 # saving rules to CSV
 cat("*** Saving rules to CSV \n")
-write(groceryrules, file="groceries_rules.csv", sep=",", quote=TRUE, row.names=TRUE)
+write(groceries_rules, file = "groceries_rules.csv", sep = ",", quote = TRUE, row.names = TRUE)
