@@ -26,21 +26,23 @@ model <- train(default ~ ., data = credits, method = "C5.0")
 print(model)
 
 # Full set, not indicative for unseen data
-pred <- predict(model, credits)
-pred_prob <- predict(model, credits, type = "prob")
+# pred <- predict(model, credits)
+# pred_prob <- predict(model, credits, type = "prob")
+# caret_conf_matrix <- confusionMatrix(pred, credits$default, positive = "yes")
+#print(caret_conf_matrix)
 
-caret_conf_matrix <- confusionMatrix(pred, credits$default, positive = "yes")
-print(caret_conf_matrix)
-results <- data.frame(pred, pred_prob$yes)
-irr.kappa <- kappa2(results[1:2])
-cat("\n*** Kappa: ")
-print(unlist(irr.kappa$value))
+folds <- createFolds(credits$default, k = 10)
+results <- lapply(folds, function(x) {
+    train <- credits[-x,]
+    test <- credits[x,]
 
-# ROC visualizing
-roc_pred <- prediction(results$pred_prob.yes, results$pred)
-roc_perf <- performance(roc_pred, measure = "tpr", x.measure = "fpr")
-plot(roc_perf, main = "ROC curve for current classifier", col = "lavender", lwd = 3)
-abline(a = 0, b = 1, lwd = 2, lty = 2)
-cat("*** AUC: ")
-roc_perf.uac <- performance(roc_pred, measure = "auc")
-print(unlist(roc_perf.uac@y.values))
+    model <- C5.0(default ~ ., data = train, trials = 20, model = tree, winnow = FALSE)
+    
+    pred <- predict(model, test)
+    pred_prob <- predict(model, credits, type = "prob")
+
+    kappa <- kappa2(data.frame(test$default, pred))
+    return(kappa$value)
+})
+cat("*** C5.0 - Kappa statistic mean for 10 folds: ")
+print(mean(unlist(results)))
