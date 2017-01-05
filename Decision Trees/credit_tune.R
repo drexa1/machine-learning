@@ -21,8 +21,26 @@ cat("*** Hamburg credit agency loans dataset imported \n\n")
 credits$default <- factor(credits$default, c("1", "2"), c("no", "yes"))
 
 # Caret automated data munging and parameter tunning
+cat("*** Model lookup... ")
 model <- train(default ~ ., data = credits, method = "C5.0")
+print(model)
 
-# Not indicative for unseen data
+# Full set, not indicative for unseen data
 pred <- predict(model, credits)
-print(table(pred, credits$default))
+pred_prob <- predict(model, credits, type = "prob")
+
+caret_conf_matrix <- confusionMatrix(pred, credits$default, positive = "yes")
+print(caret_conf_matrix)
+results <- data.frame(pred, pred_prob$yes)
+irr.kappa <- kappa2(results[1:2])
+cat("\n*** Kappa: ")
+print(unlist(irr.kappa$value))
+
+# ROC visualizing
+roc_pred <- prediction(results$pred_prob.yes, results$pred)
+roc_perf <- performance(roc_pred, measure = "tpr", x.measure = "fpr")
+plot(roc_perf, main = "ROC curve for current classifier", col = "lavender", lwd = 3)
+abline(a = 0, b = 1, lwd = 2, lty = 2)
+cat("*** AUC: ")
+roc_perf.uac <- performance(roc_pred, measure = "auc")
+print(unlist(roc_perf.uac@y.values))
