@@ -10,8 +10,8 @@ cat("------------------------------------------------ \n")
 cat(" Classification using Convoluted neural networks \n")
 cat("------------------------------------------------ \n")
 
-# setwd("C:/Users/drexa/git/MachineLearning/Tensorflow")
-setwd("C:/Users/dr186049/git/MachineLearning/Tensorflow")
+# setwd("C:/Users/dr186049/git/MachineLearning/Tensorflow")
+setwd("C:/Users/drexa/git/MachineLearning/Tensorflow")
 
 # Import image
 img <- jpeg::readJPEG('./image.jpg')
