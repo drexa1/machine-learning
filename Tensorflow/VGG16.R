@@ -1,4 +1,4 @@
-library("tensorflow") # Google Tensorflow R wrapper
+library("tensorflow") # Google Tensorflow
 library("magrittr")   # Ceci n'est pas un pipe
 library("ggplot2")    # Graphics plotting
 
