@@ -1,5 +1,5 @@
 library("tensorflow") # Tensorflow
-library("magrittr") # Ceci n'est pas un pipe
+library("magrittr") # Pipes
 library("ggplot2") # Graphics plotting
 
 options(warn = -1)
