@@ -7,7 +7,7 @@ set.seed(123) # Experiment reproducibility
 
 cat("\n")
 cat("------------------------------------------------ \n")
-cat(" Classification using Convoluted neural networks \n")
+cat(" Classification using convoluted network \n")
 cat("------------------------------------------------ \n")
 
 # setwd("C:/Users/dr186049/git/MachineLearning/Tensorflow")
