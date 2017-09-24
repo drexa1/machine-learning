@@ -60,7 +60,7 @@ vgg16 = tfSlim$conv2d(img_placeholder_scaled, 64, shape(3, 3), scope = 'vgg_16/c
         tf$squeeze(shape(1, 2), name = 'vgg_16/fc8/squeezed')
 
 # Print to Tensorboard
-tf$train$SummaryWriter('./vgg16', tf$get_default_graph())$close()
+tf$summary$FileWriter('./vgg16', tf$get_default_graph())$close()
 
 # Restoring pre - trained weights
 cat("*** Restoring pre-trained weights \n")
@@ -87,6 +87,6 @@ for (id in idx) {
 }
 p = ggplot(data.frame(d = 1:3)) + 
            annotation_custom(g) +
-           annotate('text', x = 0.05, y = 0.05, label = text, size = 4, hjust = 0, vjust = 0, color = 'darkgrey') + 
+           annotate('text', x = 0.05, y = 0.05, label = text, size = 4, hjust = 0, vjust = 0, color = 'red') + 
            xlim(0, 1) + ylim(0, 1)
            p %>% print
