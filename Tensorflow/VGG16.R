@@ -1,5 +1,5 @@
 library("tensorflow") # Tensorflow
-library("magrittr") # Ceci n'est pas un pipe
+library("magrittr") # Pipes
 library("ggplot2") # Graphics plotting
 
 options(warn = -1)
@@ -7,7 +7,7 @@ set.seed(123) # Experiment reproducibility
 
 cat("\n")
 cat("------------------------------------------------ \n")
-cat(" Classification using Convoluted neural networks \n")
+cat(" Classification using convoluted network \n")
 cat("------------------------------------------------ \n")
 
 # setwd("C:/Users/dr186049/git/MachineLearning/Tensorflow")
