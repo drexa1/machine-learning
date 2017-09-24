@@ -5,7 +5,7 @@ cat("---------------------------------------------------------- \n")
 cat(" Clustering using k-Means \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/k-Means Clustering")
+setwd("C:/Users/drexa/git/MachineLearning/k-Means Clustering")
 # setwd("C:/Users/dr186049/git/MachineLearning/k-Means Clustering")
 
 # Import data

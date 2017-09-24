@@ -7,7 +7,7 @@ cat(" Classification using k-Nearest Neighbors \n")
 cat("---------------------------------------------------------- \n")
 
 # Import data
-setwd("C:/Users/drexa/git/R/MachineLearning/k-Nearest Neighbors")
+setwd("C:/Users/drexa/git/MachineLearning/k-Nearest Neighbors")
 # setwd("C:/Users/dr186049/git/MachineLearning/k-Nearest Neighbors")
 wbcd <- read.csv("../datasets/wiscbcdata.csv", stringsAsFactors = FALSE)
 cat("*** Wisconsin General Hospital breast cancer dataset imported \n\n")
