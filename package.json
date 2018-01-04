@@ -1,0 +1,12 @@
+{
+  "name": "machine-learning",
+  "version": "1.0.0",
+  "description": "hi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drexa1/machine-learning.git"
+  },
+  "author": "Diego Ruiz",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/drexa1/machine-learning/blob/master/README.md",
+}
