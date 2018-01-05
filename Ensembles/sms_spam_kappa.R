@@ -15,8 +15,7 @@ cat("---------------------------------------------------------- \n")
 cat(" Classification using Naive Bayes (Performance evaluation) \n")
 cat("---------------------------------------------------------- \n")
 
-# setwd("C:/Users/drexa/git/R/MachineLearning/Naive Bayes")
-setwd("C:/Users/dr186049/git/MachineLearning/Naive Bayes")
+setwd("C:/Users/drexa/git/machine-learning/Naive Bayes")
 
 # Import data
 results <- read.csv("../datasets/sms_results.csv", stringsAsFactors = FALSE)
