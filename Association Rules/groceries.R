@@ -5,8 +5,7 @@ cat("---------------------------------------------------------- \n")
 cat(" Pattern discovery using Association Rules \n")
 cat("---------------------------------------------------------- \n")
 
-# setwd("C:/Users/drexa/git/R/MachineLearning/Association Rules")
-setwd("C:/Users/dr186049/git/MachineLearning/Association Rules")
+setwd("C:/Users/drexa/git/machine-learning/Association Rules")
 
 # Import data
 groceries_csv <- read.csv("../datasets/groceries.csv")
