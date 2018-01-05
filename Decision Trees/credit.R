@@ -8,8 +8,7 @@ cat("---------------------------------------------------------- \n")
 cat(" Classification using Decision Trees \n")
 cat("---------------------------------------------------------- \n")
 
-# setwd("C:/Users/drexa/git/R/MachineLearning/Decision Trees")
-setwd("C:/Users/dr186049/git/MachineLearning/Decision Trees")
+setwd("C:/Users/drexa/git/machine-learning/Decision Trees")
 
 # Import data (majority of nominal features)
 credits <- read.csv("../datasets/credit.csv", stringsAsFactors = TRUE)
