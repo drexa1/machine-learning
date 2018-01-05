@@ -5,8 +5,7 @@ cat("---------------------------------------------------------- \n")
 cat(" Classification using Decision Rules \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Classification Rules")
-# setwd("C:/Users/dr186049/git/MachineLearning/Classification Rules")
+setwd("C:/Users/drexa/git/machine-learning/Classification Rules")
 
 # Import data
 wbcd <- read.csv("../datasets/wisc_bc_data.csv", stringsAsFactors = FALSE)
