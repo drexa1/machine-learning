@@ -1,7 +1,8 @@
 
+
+setwd("C:/Users/drexa/git/machine-learning/k-Nearest Neighbors")
+
 # Import data
-setwd("C:/Users/drexa/git/MachineLearning/k-Nearest Neighbors")
-# setwd("C:/Users/dr186049/git/MachineLearning/k-Nearest Neighbors")
 wbcd <- read.csv("../datasets/wiscbcdata.csv", stringsAsFactors = TRUE)
 cat("\n *** Wisconsin General Hospital breast cancer dataset imported \n")
 
