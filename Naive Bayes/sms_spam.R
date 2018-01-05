@@ -9,9 +9,9 @@ cat("---------------------------------------------------------- \n")
 cat(" Classification using Naive Bayes \n")
 cat("---------------------------------------------------------- \n")
 
+setwd("C:/Users/drexa/git/machine-learning/Naive Bayes")
+
 # Import data
-# setwd("C:/Users/drexa/git/R/MachineLearning/Naive Bayes")
-setwd("C:/Users/dr186049/git/MachineLearning/Naive Bayes")
 sms_raw <- read.csv("../datasets/sms_spam.csv", stringsAsFactors = FALSE)
 cat("*** SMS Spam Collection dataset imported \n\n")
 
