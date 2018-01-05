@@ -5,8 +5,7 @@ cat("---------------------------------------------------------- \n")
 cat(" Classification using Decision Rules \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Classification Rules")
-# setwd("C:/Users/dr186049/git/MachineLearning/Classification Rules")
+setwd("C:/Users/drexa/git/machine-learning/Classification Rules")
 
 # Import data (majority of nominal features)
 mushrooms <- read.csv("../datasets/mushrooms.csv", stringsAsFactors = TRUE)
