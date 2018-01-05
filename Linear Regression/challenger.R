@@ -5,8 +5,7 @@ cat("---------------------------------------------------------- \n")
 cat(" Numeric forecasting using Linear Regression \n")
 cat("---------------------------------------------------------- \n")
 
-setwd("C:/Users/drexa/git/R/MachineLearning/Linear Regression")
-# setwd("C:/Users/dr186049/git/MachineLearning/Linear Regression")
+setwd("C:/Users/drexa/git/machine-learning/Linear Regression")
 
 # Import data
 launch <- read.csv("../datasets/challenger.csv")
