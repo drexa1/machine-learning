@@ -3,7 +3,7 @@ library(oro.nifti)
 
 options(warn = -1)
 set.seed(123)
-setwd("C:/Users/drexa/git/MachineLearning/Data-science-bowl-2017/sample_images")
+setwd("C:/Users/drexa/git/machine-learning/Data-science-bowl-2017/sample_images")
 
 IMAGES_PATH = paste(getwd(), .Platform$file.sep, '00cba091fa4ad62cc3200a657aeb957e', sep = '')
 
