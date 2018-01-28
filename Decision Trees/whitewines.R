@@ -9,7 +9,7 @@ cat(" Numeric forecasting using Regression Trees \n")
 cat("---------------------------------------------------------- \n")
 
 # setwd("C:/Users/drexa/git/R/MachineLearning/Regression Trees")
-setwd("C:/Users/dr186049/git/MachineLearning/Regression Trees")
+setwd("C:/Users/drexa/git/machine-learning/Decision Trees")
 
 prompt_num <- function(str) {
     input <- readline(str)
@@ -59,8 +59,8 @@ pred_cor <- cor(pred.rpart, wines_test$quality)
 cat(pred_cor)
 cat(ifelse((pred_cor > 0.5) || (pred_cor < -0.5), " (strong)", " (weak)"))
 
-MAE <- function(actual, predicted) { 
-    mean(abs(actual - predicted)) 
+MAE <- function(actual, predicted) {
+    mean(abs(actual - predicted))
 }
 cat("\n*** Performance measurement by Mean Absolute Error: ")
 pred_mae <- MAE(pred.rpart, wines_test$quality)
