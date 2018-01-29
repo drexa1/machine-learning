@@ -78,6 +78,7 @@ def MCMC_SA(cities, MAX_ITER=10000, c=100):
 		# or else Boltzmann function of probability distribution lower than random value in 0-1 range.
 		# The Boltzmann distribution is a probability distribution that gives the probability of a certain state 
 		# as a function of that state’s energy and temperature.
+		# H(T) = ∑j exp(−Ej / kT)
 		(T > 0 and random() < math.exp(-1 * delta_distance / T)): 
 			route = new_route
 			curr_distance = new_distance
