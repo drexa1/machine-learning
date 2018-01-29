@@ -25,7 +25,7 @@ def main():
 	route_4 = MCMC(cities, MAX_ITER=10000, T=100)
 	print_total_distance(route_4)
 
-	print("\nUsing MCMC with Simulated Annealing, MAX_ITER = 10,000 and c = 70")
+	print("\nUsing MCMC with Simulated Annealing, MAX_ITER = 10,000 and c = 100")
 	route_5 = MCMC_SA(cities, MAX_ITER=10000, c=100)
 	print_total_distance(route_5)
 
@@ -59,7 +59,7 @@ def MCMC(cities, MAX_ITER=10000, T=10):
 	return best
 
 # MCMC with Simulated Annealing (T decreases over time over a cooling rate)
-def MCMC_SA(cities, MAX_ITER=10000, c=70):
+def MCMC_SA(cities, MAX_ITER=10000, c=100):
 	route = list(cities.items())
 	best  = list(route)
 	shuffle(route)
