@@ -43,6 +43,7 @@ combined <- rbind(dplyr::select(train, MSSubClass:SaleCondition),
 feature_classes <- sapply(names(combined), function(x) { class(combined[[x]]) })
 categorical_features <- names(feature_classes[feature_classes == "character"])
 numerical_features <-names(feature_classes[feature_classes != "character"])
+assert_that(length(categorical_features) + length(numerical_features) == length(names(combined)))
 
 # 1-hot encoding for categorical features
 dummies <- caret::dummyVars( ~ ., combined[categorical_features])
