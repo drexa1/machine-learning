@@ -43,16 +43,13 @@ for(feature in selected_features) {
     color[features[[length(features)]][3]=="B"] <- "seagreen3"
     
     # REF http://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html
-    plot(data.frame(features[[length(features)]][1], features[[length(features)]][2]),                              
+    p <- plot(data.frame(features[[length(features)]][1], features[[length(features)]][2]),                              
          col = color,  
          pch = 20,
          cex = .5,                                                
          xlab = "Patients",                                              
          ylab = feature,                                   
          main = paste("Masses: ",gsub(paste("_",feature_type,sep=""),"",feature),sep=""))
-    # legend (x=0, y=max(features[[length(features)]][2]), 
-            # legend = c("Benign", "Malignant"), 
-            # col = c("black", "red"), 
-            # pch = 15)
+    print(p)
 }
 
