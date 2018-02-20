@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+
 from keras.layers import Dense, Input
 from keras.models import Model
 from keras.callbacks import TensorBoard
@@ -32,20 +33,16 @@ model = Model(inputs = [input_layer], outputs = [output])
 model.summary()
 
 # Tensorboard directory
-log_dir = r"C:\Users\drexa\git\machine-learning\python\linear\3"
+log_dir = r"C:\Users\drexa\git\machine-learning\python\linear"
 lr = 0.1
 epochs = 5001
 
-# Optimizer to minimize loss
-sgd = optimizers.sgd(lr = lr)
-model.compile(optimizer = sgd, loss = "mean_squared_error")
-
-tensorboard = TensorBoard(log_dir = log_dir)
+tensorboard = TensorBoard(log_dir = log_dir, write_graph = True)
 
 # Train the model
-verbose = 0
-if verbose == 0: print("Training...")
-fit = model.fit(x = sample_x, y = sample_y, epochs = epochs, verbose = verbose, callbacks = [tensorboard])
+print("Training...")
+model.compile(loss = "mean_squared_error", optimizer="adam", metrics=["accuracy"])
+fit = model.fit(x = sample_x, y = sample_y, epochs = epochs, batch_size = 50, verbose = 0, callbacks = [tensorboard])
 
 # Predict y
 y_pred = model.predict(sample_x)

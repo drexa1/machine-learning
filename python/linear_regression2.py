@@ -9,6 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
 n = 250
 d = 1
 sample_x = np.random.rand(n, d)
+print(sample_x)
 
 slope = 12
 bias = 10
@@ -16,10 +17,6 @@ sample_y = slope * sample_x + bias
 
 noise = np.random.rand(n, d)
 sample_x += noise
-
-# Plot
-plt.scatter(sample_x, sample_y, marker = "x")
-# plt.show()
 
 # Weight & bias
 W = tf.Variable(np.array([[5.0]]), dtype = tf.float32, name = "weight")
@@ -43,38 +40,35 @@ train = optimizer.minimize(loss)
 # Summaries
 def summaries(var, name):
 	with tf.name_scope(name):
-		 with tf.name_scope("summaries"):
-		 	mean = tf.reduce_mean(var)
-		 	tf.summary.scalar("mean", mean)
-		 	with tf.name_scope("std-dev"):
-		 		stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
-		 	tf.summary.scalar('std-dev', stddev)
-		 	tf.summary.scalar('max', tf.reduce_max(var))
-		 	tf.summary.scalar('min', tf.reduce_min(var))
-		 	tf.summary.histogram('histogram', var)
+	 	mean = tf.reduce_mean(var)
+	 	tf.summary.scalar("mean", mean)
+	 	stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
+	 	tf.summary.scalar('std-dev', stddev)
+	 	maxx = tf.reduce_max(var)
+	 	tf.summary.scalar('max', maxx)
+	 	minn = tf.reduce_min(var)
+	 	tf.summary.scalar('min', minn)
+	 	tf.summary.histogram('histogram', var)
 
 # Define summaries
 summaries(W, "010-Weights")
-summaries(B, "020-biases")
-summaries(loss, "030-loss")
-
-# Initialize
-init = tf.global_variables_initializer()
+summaries(B, "020-Biases")
+summaries(loss, "030-Loss")
 
 # Tensorboard directory
-log_dir = r"C:\Users\drexa\git\machine-learning\python\linear\2"
+log_dir = r"C:\Users\drexa\git\machine-learning\python\linear"
 lr = 0.1
 epochs = 5001
 
 # Train the model
 with tf.Session() as sess:
-	sess.run(init)
+	sess.run(tf.global_variables_initializer())
 	# Merge all the summaries and write them
 	merged = tf.summary.merge_all()
 	writer = tf.summary.FileWriter(log_dir, sess.graph)
 	for epoch in range(epochs):
-		[y_pred, curr_w, curr_b, curr_loss, _, summary] = sess.run([y_labels, W, B, loss, train, merged], feed_dict = {X:sample_x, Y: sample_y, lr_rate: lr})
-		writer.add_summary(summary, epoch)
+		[y_pred, curr_w, curr_b, curr_loss, _, curr_summary] = sess.run([y_labels, W, B, loss, train, merged], feed_dict = {X:sample_x, Y: sample_y, lr_rate: lr})
+		writer.add_summary(curr_summary, epoch)
 		if epoch % 50 == 0:
 			print(curr_loss)
 

@@ -1,13 +1,15 @@
 import os
-import numpy as np 
+import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
 
 # x: from 0 to 10, 100 items
 x_input = np.linspace(0, 10, 100)
-weight = 5
-bias = 2.5
+
+weight = 12
+bias = 10
 y_input = weight * x_input + bias
 
 W = tf.Variable(tf.random_normal([1]), name = "weight")
@@ -20,36 +22,32 @@ with tf.name_scope("input"):
 
 # Model
 with tf.name_scope("model"):
-	y_pred = tf.add(tf.multiply(X, W), B)
+	Y_pred = tf.add(tf.multiply(X, W), B)
 
 # Loss
 with tf.name_scope("loss"):
-	loss = tf.reduce_mean(tf.square(y_pred - Y))
-
-optimizer = tf.train.GradientDescentOptimizer(0.01)
-
-# Training step
-train = optimizer.minimize(loss)
+	loss = tf.reduce_mean(tf.square(Y_pred - Y))
+	optimizer = tf.train.GradientDescentOptimizer(learning_rate = 0.01)
+	# Training step
+	train = optimizer.minimize(loss)
 
 # Initialize
 init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
-cost = tf.summary.scalar("loss", loss)
 
-sess.run(init)
-epoch = 2001
+tf.summary.scalar("SIMPLE-loss", loss)
+merged_summary = tf.summary.merge_all()
+writer = tf.summary.FileWriter(r"C:\Users\drexa\git\machine-learning\python\linear", graph = tf.get_default_graph())
 
-merged_summary_op = tf.summary.merge_all()
-summary_writer = tf.summary.FileWriter(r"C:\Users\drexa\git\machine-learning\python\linear\1", graph = tf.get_default_graph())
-for step in range(epoch):
-	[_, accuracy, summary] = sess.run([train, loss, merged_summary_op], feed_dict = {X: x_input, Y: y_input})
-	summary_writer.add_summary(summary, step)
+epochs = 2001
+for step in range(epochs):
+	[_, curr_loss, curr_summary] = sess.run([train, loss, merged_summary], feed_dict = {X: x_input, Y: y_input})
+	writer.add_summary(curr_summary, step)
 	if step % 50 == 0:
-		print(accuracy)
+		print(curr_loss)
 		
-summary_writer.close()
-
-print("\nModel parameters:")       
-print("Weight: %f" % sess.run(W))
-print("bias: %f" % sess.run(B))
+writer.close()
+    
+print("\nWeight: %f" % sess.run(W))
+print("Bias: %f\n" % sess.run(B))
