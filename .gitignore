@@ -1,3 +1,4 @@
 *.ckpt
 .Rhistory
-vgg16
+Tensorflow-R/vgg16
+python/linear

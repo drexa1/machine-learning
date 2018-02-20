@@ -9,12 +9,13 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
 n = 250
 d = 1
 sample_x = np.random.rand(n, d)
-noise = np.random.rand(n, d)
-sample_x += noise
 
 slope = 12
 bias = 10
 sample_y = slope * sample_x + bias
+
+noise = np.random.rand(n, d)
+sample_x += noise
 
 # Plot
 plt.scatter(sample_x, sample_y, marker = "x")
@@ -61,7 +62,7 @@ summaries(loss, "030-loss")
 init = tf.global_variables_initializer()
 
 # Tensorboard directory
-log_dir = r"C:\Users\drexa\git\machine-learning\python\linear2"
+log_dir = r"C:\Users\drexa\git\machine-learning\python\linear\2"
 lr = 0.1
 epochs = 5001
 
@@ -83,4 +84,5 @@ print("W: {}, B: {}, Loss: {}\n".format(curr_w[0][0], curr_b[0][0], curr_loss))
 
 plt.scatter(sample_x, sample_y, marker = "x")
 plt.scatter(sample_x, y_pred, c = "red", marker = "o")
+plt.gcf().canvas.set_window_title("LR Tensorflow")
 plt.show()

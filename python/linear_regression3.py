@@ -12,8 +12,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
 n = 250
 d = 1
 sample_x = np.random.rand(n, d)
-noise = np.random.rand(n, d)
-sample_x += noise
 
 slope = 12
 bias = 10
@@ -34,7 +32,7 @@ model = Model(inputs = [input_layer], outputs = [output])
 model.summary()
 
 # Tensorboard directory
-log_dir = r"C:\Users\drexa\git\machine-learning\python\linear3"
+log_dir = r"C:\Users\drexa\git\machine-learning\python\linear\3"
 lr = 0.1
 epochs = 5001
 
@@ -58,4 +56,5 @@ print("W: {}, B: {}, Loss: {}\n".format(dense.get_weights()[0][0][0], dense.get_
 
 plt.scatter(sample_x, sample_y, marker = "x")
 plt.scatter(sample_x, y_pred, c = "red", marker = "o")
+plt.gcf().canvas.set_window_title("LR Tensorflow-Keras")
 plt.show()
