@@ -38,7 +38,7 @@ tbCallback = TensorBoard(log_dir = log_dir, write_graph = True)
 
 # Train the model
 lr = 0.1
-epochs = 5001
+epochs = 5000
 print('Training...')
 model.compile(loss = 'mean_squared_error', optimizer = 'adam', metrics = ['accuracy'])
 fit = model.fit(x = sample_x, y = sample_y, epochs = epochs, batch_size = 50, verbose = 0, callbacks = [tbCallback])

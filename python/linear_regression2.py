@@ -58,7 +58,7 @@ summaries(loss, '030-Loss')
 # Tensorboard directory
 log_dir = r'C:\Users\drexa\git\machine-learning\python\linear'
 lr = 0.1
-epochs = 5001
+epochs = 5000
 
 # Train the model
 with tf.Session() as sess:

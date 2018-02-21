@@ -40,7 +40,8 @@ tf.summary.scalar('SIMPLE-loss', loss)
 merged_summary = tf.summary.merge_all()
 writer = tf.summary.FileWriter(r'C:\Users\drexa\git\machine-learning\python\linear', graph = tf.get_default_graph())
 
-epochs = 2001
+# Train
+epochs = 2000
 for step in range(epochs):
 	[_, curr_loss, curr_summary] = sess.run([train, loss, merged_summary], feed_dict = {X: x_input, Y: y_input})
 	writer.add_summary(curr_summary, step)
