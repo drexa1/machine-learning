@@ -10,10 +10,10 @@ cat("------------------------------------------------ \n")
 cat(" Classification using convoluted network \n")
 cat("------------------------------------------------ \n")
 
-setwd("C:/Users/drexa/git/machine-learning/Tensorflow")
+setwd("C:/Users/drexa/git/machine-learning/Tensorflow-R")
 
 # Import image
-img <- jpeg::readJPEG('./image.jpg')
+img <- jpeg::readJPEG('image.jpg')
 size = dim(img)
 img_array = array(255 * img, c(1, size[1], size[2], size[3]))
 cat("*** Image read and rescaled \n")
@@ -59,13 +59,14 @@ vgg16 = tfSlim$conv2d(img_placeholder_scaled, 64, shape(3, 3), scope = 'vgg_16/c
         tf$squeeze(shape(1, 2), name = 'vgg_16/fc8/squeezed')
 
 # Print to Tensorboard
-tf$summary$FileWriter('./vgg16', tf$get_default_graph())$close()
+LOG_DIR = './vgg16'
+tf$summary$FileWriter(LOG_DIR, tf$get_default_graph())$close()
 
 # Restoring pre - trained weights
 cat("*** Restoring pre-trained weights \n")
 session = tf$Session()
 restorer = tf$train$Saver()
-restorer$restore(session, './vgg_16.ckpt')
+restorer$restore(session, './vgg16.ckpt')
 
 # Calculating probabilities
 cat("*** Feeding data to the graph \n")
@@ -89,3 +90,4 @@ p = ggplot(data.frame(d = 1:3)) +
            annotate('text', x = 0.05, y = 0.05, label = text, size = 4, hjust = 0, vjust = 0, color = 'red') + 
            xlim(0, 1) + ylim(0, 1)
            p %>% print
+

@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # 250 points of 1 dimension
 n = 250
@@ -19,13 +19,13 @@ noise = np.random.rand(n, d)
 sample_x += noise
 
 # Weight & bias
-W = tf.Variable(np.array([[5.0]]), dtype = tf.float32, name = "weight")
-B = tf.Variable(np.array([[5.0]]), dtype = tf.float32, name = "bias")
+W = tf.Variable(np.array([[5.0]]), dtype = tf.float32, name = 'weight')
+B = tf.Variable(np.array([[5.0]]), dtype = tf.float32, name = 'bias')
 
 # Placeholders
-X = tf.placeholder(tf.float32, shape = (None, 1), name = "X")
-Y = tf.placeholder(tf.float32, shape = (None, 1), name = "Y")
-lr_rate = tf.placeholder(tf.float32, shape = (), name = "LR")
+X = tf.placeholder(tf.float32, shape = (None, 1), name = 'X')
+Y = tf.placeholder(tf.float32, shape = (None, 1), name = 'Y')
+lr_rate = tf.placeholder(tf.float32, shape = (), name = 'LR')
 
 # Model
 y_labels = W * X + B
@@ -41,7 +41,7 @@ train = optimizer.minimize(loss)
 def summaries(var, name):
 	with tf.name_scope(name):
 	 	mean = tf.reduce_mean(var)
-	 	tf.summary.scalar("mean", mean)
+	 	tf.summary.scalar('mean', mean)
 	 	stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
 	 	tf.summary.scalar('std-dev', stddev)
 	 	maxx = tf.reduce_max(var)
@@ -51,12 +51,12 @@ def summaries(var, name):
 	 	tf.summary.histogram('histogram', var)
 
 # Define summaries
-summaries(W, "010-Weights")
-summaries(B, "020-Biases")
-summaries(loss, "030-Loss")
+summaries(W, '010-Weights')
+summaries(B, '020-Biases')
+summaries(loss, '030-Loss')
 
 # Tensorboard directory
-log_dir = r"C:\Users\drexa\git\machine-learning\python\linear"
+log_dir = r'C:\Users\drexa\git\machine-learning\python\linear'
 lr = 0.1
 epochs = 5001
 
@@ -73,10 +73,10 @@ with tf.Session() as sess:
 			print(curr_loss)
 
 writer.close()
-print("\nSlope: {}, Bias: {}".format(slope, bias))
-print("W: {}, B: {}, Loss: {}\n".format(curr_w[0][0], curr_b[0][0], curr_loss))
+print('\nSlope: {}, Bias: {}'.format(slope, bias))
+print('W: {}, B: {}, Loss: {}\n'.format(curr_w[0][0], curr_b[0][0], curr_loss))
 
-plt.scatter(sample_x, sample_y, marker = "x")
-plt.scatter(sample_x, y_pred, c = "red", marker = "o")
-plt.gcf().canvas.set_window_title("LR Tensorflow")
+plt.scatter(sample_x, sample_y, marker = 'x')
+plt.scatter(sample_x, y_pred, c = 'red', marker = 'o')
+plt.gcf().canvas.set_window_title('LR Tensorflow')
 plt.show()

@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # x: from 0 to 10, 100 items
 x_input = np.linspace(0, 10, 100)
@@ -12,33 +12,33 @@ weight = 12
 bias = 10
 y_input = weight * x_input + bias
 
-W = tf.Variable(tf.random_normal([1]), name = "weight")
-B = tf.Variable(tf.random_normal([1]), name = "bias")
+W = tf.Variable(tf.random_normal([1]), name = 'weight')
+B = tf.Variable(tf.random_normal([1]), name = 'bias')
 
 # Placeholders
-with tf.name_scope("input"):
-	X = tf.placeholder(tf.float32, name = "X")
-	Y = tf.placeholder(tf.float32, name = "Y")
+with tf.name_scope('input'):
+	X = tf.placeholder(tf.float32, name = 'X')
+	Y = tf.placeholder(tf.float32, name = 'Y')
 
 # Model
-with tf.name_scope("model"):
+with tf.name_scope('model'):
 	Y_pred = tf.add(tf.multiply(X, W), B)
 
 # Loss
-with tf.name_scope("loss"):
+with tf.name_scope('loss'):
 	loss = tf.reduce_mean(tf.square(Y_pred - Y))
 	optimizer = tf.train.GradientDescentOptimizer(learning_rate = 0.01)
 	# Training step
 	train = optimizer.minimize(loss)
 
 # Initialize
-init = tf.global_variables_initializer()
 sess = tf.Session()
+init = tf.global_variables_initializer()
 sess.run(init)
 
-tf.summary.scalar("SIMPLE-loss", loss)
+tf.summary.scalar('SIMPLE-loss', loss)
 merged_summary = tf.summary.merge_all()
-writer = tf.summary.FileWriter(r"C:\Users\drexa\git\machine-learning\python\linear", graph = tf.get_default_graph())
+writer = tf.summary.FileWriter(r'C:\Users\drexa\git\machine-learning\python\linear', graph = tf.get_default_graph())
 
 epochs = 2001
 for step in range(epochs):
@@ -49,5 +49,5 @@ for step in range(epochs):
 		
 writer.close()
     
-print("\nWeight: %f" % sess.run(W))
-print("Bias: %f\n" % sess.run(B))
+print('\nWeight: %f' % sess.run(W))
+print('Bias: %f\n' % sess.run(B))
