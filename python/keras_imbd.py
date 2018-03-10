@@ -34,6 +34,7 @@ y_test = np.asarray(test_labels).astype('float32')
 model = models.Sequential()
 model.add(layers.Dense(16, activation='relu', input_shape=(10_000, ))) # zeroes out the negatives
 model.add(layers.Dense(16, activation='relu'))
+model.add(layers.Dense(16, activation='relu'))
 model.add(layers.Dense(1, activation='sigmoid')) # squashes arbitrary values into [0, 1]
 
 print('\nCompiling model:')
@@ -71,13 +72,13 @@ plt.plot(epochs, val_acc, 'r', label='Validation acc')
 plt.title('Training and validation accuracy')
 plt.legend()
 
-plt.plot()
+plt.show()
 
 # Retraining from scratch
 print('\nRetraining with full set:')
 model.fit(x_train, y_train, epochs=5, batch_size=512)
 results = model.evaluate(x_test, y_test)
-print('\n{}'.format(results))
+print('\nLoss: {}, accuracy: {}'.format(results[0], results[1]))
 
 # Predict new data
 y_pred = model.predict(x_test)
