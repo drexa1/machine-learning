@@ -78,7 +78,7 @@ model_callbacks <- function() {
   callback_model_checkpoint <- callback_model_checkpoint("jenaClimate_checkpoints.h5")
   callback_early_stopping <- callback_early_stopping(monitor="acc", patience=1)
   callback_reduce_lr_on_plateau <- callback_reduce_lr_on_plateau(monitor = "val_loss", factor = 0.1)
-  callback_tensorboard(log_dir="tensorboard_jenaClimate")
+  callback_tensorboard <- callback_tensorboard(log_dir="tensorboard_jenaClimate")
   list(callback_model_checkpoint, callback_early_stopping, callback_reduce_lr_on_plateau, callback_tensorboard)
 }
 
@@ -109,11 +109,15 @@ result <- tryCatch({
 
 message("Training...")
 val_steps <- (300000 - 200001 - lookback)/batch_size
-history <- model %>% fit_generator(train_gen, steps_per_epoch = 500, epochs = 40, validation_data = val_gen, validation_steps = val_steps)
+model_callbacks <- model_callbacks()
+history <- model %>% fit_generator(train_gen, 
+                                   steps_per_epoch = 500, 
+                                   epochs = 40,
+                                   callbacks = model_callbacks,
+                                   validation_data = val_gen, 
+                                   validation_steps = val_steps
+                                   )
 
 save_model_weights_hdf5(model, "jenaClimate_weights.h5", overwrite = TRUE)
 
 plot(history)
-
-
-
