@@ -14,7 +14,7 @@ csv_data <- read_csv(filename)
 float_data <- data.matrix(csv_data[,-1])
 
 message("Plotting temperature...")
-temp_plot <- ggplot(csv_data, aes(x = 1:nrow(data), y = `T (degC)`)) + geom_line(color = 'blue')
+temp_plot <- ggplot(csv_data, aes(x = 1:nrow(csv_data), y = `T (degC)`)) + geom_line(color = 'blue')
 print(temp_plot)
 
 message("Center and scale...")
