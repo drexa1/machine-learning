@@ -25,11 +25,11 @@ data <- scale(float_data, center = mean, scale = std)
 
 lookback <- 1440
 step <- 6
-delay <- 144
+lookahead <- 144
 batch_size <- 128
 
-generator <- function(data, lookback, delay, min_index, max_index, shuffle = FALSE, batch_size = 128, step = 6) {
-  if (is.null(max_index)) max_index <- nrow(data) - delay - 1
+generator <- function(data, lookback, lookahead, min_index, max_index, shuffle = FALSE, batch_size = 128, step = 6) {
+  if (is.null(max_index)) max_index <- nrow(data) - lookahead - 1
   index <- min_index + lookback
   function() {
     if (shuffle) {
@@ -41,25 +41,30 @@ generator <- function(data, lookback, delay, min_index, max_index, shuffle = FAL
       index <<- index + length(rows)
     }
     n_columns <- dim(data)[[2]]
-    x <- array(0, dim = c(length(rows), lookback/step, n_columns))
+    x <- array(0, dim = c(length(rows), lookback/step, n_columns)) # [batchsize, 240, 14]
     y <- array(0, dim = c(length(rows)))
     n_samples <- dim(x)[[2]]
     for (i in 1:length(rows)) {
       indices <- seq(rows[[i]] - lookback, rows[[i]], length.out = n_samples)
       x[i,,] <- data[indices,]
-      y[[i]] <- data[rows[[i]] + delay,2]
+      y[[i]] <- data[rows[[i]] + lookahead,2] # [lookahead row, T (degC)]
     }
     list(x, y)
   }
 }
 
-train_gen <- generator(data, lookback = lookback, delay = delay, min_index = 1, max_index = 200000, shuffle = FALSE, step = step, batch_size = batch_size)
-val_gen = generator(data, lookback = lookback, delay = delay, min_index = 200001, max_index = 300000, step = step, batch_size = batch_size)
-test_gen <- generator(data, lookback = lookback, delay = delay, min_index = 300001, max_index = NULL, step = step, batch_size = batch_size)
+train_gen <- generator(data, lookback = lookback, lookahead = lookahead, min_index = 1, max_index = 200000, shuffle = FALSE, step = step, batch_size = batch_size)
+val_gen = generator(data, lookback = lookback, lookahead = lookahead, min_index = 200001, max_index = 300000, step = step, batch_size = batch_size)
+test_gen <- generator(data, lookback = lookback, lookahead = lookahead, min_index = 300001, max_index = NULL, step = step, batch_size = batch_size)
 
 load_model <- function(model_file) {
   model_yaml <- yaml.load_file(model_file)
   model <- model_from_yaml(model_yaml)
+}
+
+save_model <- function(model, model_file) {
+  model_yaml <- model_to_yaml(model)
+  write_yaml(model_yaml, model_file, fileEncoding = "UTF-8")
 }
 
 create_model <- function () {
@@ -67,11 +72,6 @@ create_model <- function () {
            layer_gru(units = 32, dropout = 0.1, recurrent_dropout = 0.5, return_sequences = TRUE, input_shape = list(NULL, dim(data)[[-1]])) %>%
            layer_gru(units = 64, activation = "relu", dropout = 0.1, recurrent_dropout = 0.5) %>%
            layer_dense(units = 1)
-}
-
-save_model <- function(model, model_file) {
-  model_yaml <- model_to_yaml(model)
-  write_yaml(model_yaml, model_file)
 }
 
 model_callbacks <- function() {
@@ -102,7 +102,8 @@ load_weights <- function(model, weights_file) {
 }
 
 result <- tryCatch({
-  load_weights(model, "jenaClimate_weights.h5")
+  load_weights(model, "jenaClimate_checkpoints.h5")
+  message("Weights found.")
 }, error = function(e) {
   message("Weights not found.")
 })
