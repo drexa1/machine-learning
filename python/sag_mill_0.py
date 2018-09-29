@@ -38,7 +38,7 @@ def main():
 	logger.info("Compiling model...")
 	model.compile(optimizer=RMSprop(), loss='mae')
 
-	val_steps = (400_000 - 300_001 - lookback)
+	val_steps = (400_000 - 300_001 - lookback) //batch_size
 	history = model.fit_generator(train_gen, steps_per_epoch=500, epochs=50, validation_data=val_gen, validation_steps=val_steps, callbacks=model_callbacks())
 
 	loss = history.history['loss']
@@ -46,9 +46,11 @@ def main():
 	epochs = range(1, len(loss) + 1)
 
 	plt.figure()
-	plt.plot(epochs, loss, 'bo', label='Training loss')
-	plt.plot(epochs, val_loss, 'b', label='Validation loss')
+	plt.plot(epochs, loss, 'b', label='Training loss')
+	plt.plot(epochs, val_loss, 'g', label='Validation loss')
 	plt.show()
+
+	logger.info("Done")
 
 def model_callbacks():
 	keras.callbacks.ModelCheckpoint(filepath='sag_mill_0.h5', monitor='val_loss', save_best_only=True,)
