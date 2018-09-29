@@ -6,7 +6,7 @@ library(magrittr)
 library(yaml)
 library(keras)
 
-setwd("C:/Users/Casa/Desktop")
+setwd("C:/Users/drexa/git/machine-learning/Keras-R")
 
 data_dir <- "./"
 filename <- file.path(data_dir, "jena_climate_2009_2016.csv")
@@ -53,26 +53,17 @@ generator <- function(data, lookback, lookahead, min_index, max_index, shuffle =
   }
 }
 
-train_gen <- generator(data, lookback = lookback, lookahead = lookahead, min_index = 1, max_index = 200000, shuffle = FALSE, step = step, batch_size = batch_size)
-val_gen = generator(data, lookback = lookback, lookahead = lookahead, min_index = 200001, max_index = 300000, step = step, batch_size = batch_size)
-test_gen <- generator(data, lookback = lookback, lookahead = lookahead, min_index = 300001, max_index = NULL, step = step, batch_size = batch_size)
+model <- keras_model_sequential() %>%
+    layer_gru(units = 32, dropout = 0.1, recurrent_dropout = 0.5, return_sequences = TRUE, input_shape = list(NULL, dim(data)[[-1]])) %>%
+    layer_gru(units = 64, activation = "relu", dropout = 0.1, recurrent_dropout = 0.5) %>%
+    layer_dense(units = 1)
 
-load_model <- function(model_file) {
-  model_yaml <- yaml.load_file(model_file)
-  model <- model_from_yaml(model_yaml)
-}
+message("Compiling model...")
+model %>% compile(optimizer = optimizer_rmsprop(), loss = "mae")
 
-save_model <- function(model, model_file) {
-  model_yaml <- model_to_yaml(model)
-  write_yaml(model_yaml, model_file, fileEncoding = "UTF-8")
-}
-
-create_model <- function () {
-  model <- keras_model_sequential() %>%
-           layer_gru(units = 32, dropout = 0.1, recurrent_dropout = 0.5, return_sequences = TRUE, input_shape = list(NULL, dim(data)[[-1]])) %>%
-           layer_gru(units = 64, activation = "relu", dropout = 0.1, recurrent_dropout = 0.5) %>%
-           layer_dense(units = 1)
-}
+train_gen <- generator(data, lookback = lookback, lookahead = lookahead, min_index = 1, max_index = 200000, shuffle = FALSE, step = 1, batch_size = batch_size)
+val_gen = generator(data, lookback = lookback, lookahead = lookahead, min_index = 200001, max_index = 300000, step = 1, batch_size = batch_size)
+test_gen <- generator(data, lookback = lookback, lookahead = lookahead, min_index = 300001, max_index = NULL, step = 1, batch_size = batch_size)
 
 model_callbacks <- function() {
   callback_model_checkpoint <- callback_model_checkpoint("jenaClimate_checkpoints.h5")
@@ -81,32 +72,6 @@ model_callbacks <- function() {
   callback_tensorboard <- callback_tensorboard(log_dir="tensorboard_jenaClimate")
   list(callback_model_checkpoint, callback_early_stopping, callback_reduce_lr_on_plateau, callback_tensorboard)
 }
-
-result <- tryCatch({
-  model <- load_model("jenaClimate_model.yml")
-  message("Model found.")
-  message(model$summary)
-}, error = function(e) {
-  message("Model not found.")
-  message("Creating model...")
-  model <- create_model()
-  message("Saving model...")
-  save_model(model, "jenaClimate_model.yml")
-}, finally = {
-  message("Compiling model...")
-  model %>% compile(optimizer = optimizer_rmsprop(), loss = "mae")
-})
-
-load_weights <- function(model, weights_file) {
-  load_model_weights_hdf5(model, weights_file, by_name = FALSE, skip_mismatch = FALSE, reshape = FALSE)
-}
-
-result <- tryCatch({
-  load_weights(model, "jenaClimate_checkpoints.h5")
-  message("Weights found.")
-}, error = function(e) {
-  message("Weights not found.")
-})
 
 message("Training...")
 val_steps <- (300000 - 200001 - lookback)/batch_size

@@ -22,9 +22,9 @@ start_time <- Sys.time()
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
 
-system("ls ../input")
-train <- read.csv("../input/houseprices_train.csv", stringsAsFactors = FALSE)
-test <- read.csv("../input/houseprices_test.csv", stringsAsFactors = FALSE)
+setwd("C:/Users/drexa/git/machine-learning/")
+train <- read.csv("./datasets/houseprices_train.csv", stringsAsFactors = FALSE)
+test <- read.csv("./datasets/houseprices_test.csv", stringsAsFactors = FALSE)
 test_Id <- test$Id # save for submission file
 
 # Plot target distribution from the data provided
