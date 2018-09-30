@@ -10,7 +10,7 @@ library(keras)
 setwd("C:/Users/drexa/git/machine-learning/Keras-R")
 
 data_dir <- "./"
-filename <- file.path(data_dir, "sag_mill_0.csv")
+filename <- file.path(data_dir, "sag_mill.csv")
 csv_data <- read_csv(filename, na="")
 dropna_csv_data <- na.omit(csv_data)
 na_summary <- sapply(dropna_csv_data, function(x) sum(is.na(x)))

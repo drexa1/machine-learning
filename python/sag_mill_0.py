@@ -1,5 +1,6 @@
 import logging
 import os
+import timeit
 import keras
 import numpy as np
 from keras import layers
@@ -15,7 +16,16 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 def main():
 	logger.info("Loading dataset...")
-	float_data = get_data('sag_mill_0.csv')
+	float_data = get_data('sag_mill.csv')
+
+	target1 = float_data['Mill main drive - Main motor current'].values
+	f1 = plt.figure(1)
+	plt.plot(range(len(target1)), target1, 'b', label='Mill main drive - Main motor current')
+	f1.show()
+	target2 = float_data['Mill weight'].values
+	f2 = plt.figure(2)
+	plt.plot(range(len(target2)), target2, 'g', label='Mill weight')
+	f2.show()
 
 	logger.info("Normalizing...")
 	data = normalize(float_data)
@@ -25,9 +35,9 @@ def main():
 	delay = 10
 	batch_size = 128
 
-	train_gen = generator(data, lookback=lookback, delay=delay, min_index=None, max_index=300_000, step=step, batch_size=batch_size)
-	val_gen = generator(data, lookback=lookback, delay=delay, min_index=300_001, max_index=400_000, step=step, batch_size=batch_size)
-	test_gen = generator(data, lookback=lookback, delay=delay, min_index=400_001, max_index=None, step=step, batch_size=batch_size)
+	train_gen = generator(data, lookback=lookback, delay=delay, min_index=None, max_index=300000, step=step, batch_size=batch_size)
+	val_gen = generator(data, lookback=lookback, delay=delay, min_index=300001, max_index=400000, step=step, batch_size=batch_size)
+	test_gen = generator(data, lookback=lookback, delay=delay, min_index=400001, max_index=None, step=step, batch_size=batch_size)
 
 	logger.info("Creating model...")
 	model = Sequential()
@@ -38,8 +48,11 @@ def main():
 	logger.info("Compiling model...")
 	model.compile(optimizer=RMSprop(), loss='mae')
 
-	val_steps = (400_000 - 300_001 - lookback) //batch_size
+	val_steps = (400000 - 300001 - lookback) // batch_size
+	start = timeit.timeit()
 	history = model.fit_generator(train_gen, steps_per_epoch=500, epochs=50, validation_data=val_gen, validation_steps=val_steps, callbacks=model_callbacks())
+	end = timeit.timeit()
+	logger.info("Training took: %s", end - start)
 
 	loss = history.history['loss']
 	val_loss = history.history['val_loss']
@@ -62,7 +75,6 @@ def model_callbacks():
 def get_data(csv_file):
 	df = read_csv(csv_file, na_values=[''])
 	df.drop(['time'], 1, inplace=True)
-	# df = df.replace('', np.NaN)
 	df.dropna(inplace=True)
 	logger.info("Checking for NaN's...")
 	logger.debug(df.isnull().any())
@@ -95,8 +107,10 @@ def generator(data, lookback, delay, min_index, max_index, shuffle=False, batch_
 		for i, row in enumerate(rows):
 			indices = range(rows[i] - lookback, rows[i], step)
 			x[i] = data.values[indices]
-			y[i,0] = data.values[rows[i] + delay][2] # Mill main drive - Main motor current
-			y[i,1] = data.values[rows[i] + delay][5] # Mill weight
+			target1_col = data.columns.get_loc('Mill main drive - Main motor current')
+			y[i,0] = data.values[rows[i] + delay][target1_col]
+			target2_col = data.columns.get_loc('Mill weight')
+			y[i,1] = data.values[rows[i] + delay][target2_col]
 
 		yield x, y
 
